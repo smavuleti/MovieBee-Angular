@@ -1,48 +1,35 @@
-<mat-card>
+<mat-card role="dialog" aria-labelledby="loginTitle">
   <mat-card-header>
-    <mat-card-title>Login</mat-card-title>
+    <mat-card-title id="loginTitle">Login</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <!-- Reactive Form -->
-    <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
-      <mat-form-field appearance="fill">
+    <form
+      [formGroup]="loginForm"
+      (ngSubmit)="loginUser()"
+      aria-labelledby="loginTitle"
+    >
+      <mat-form-field>
         <mat-label>Username</mat-label>
-        <input
-          matInput
-          formControlName="Username"
-          placeholder="Enter your username"
-          type="text"
-          required
-        />
-        <mat-error *ngIf="loginForm.controls['Username'].hasError('required')">
+        <input matInput formControlName="Username" required />
+        <mat-error *ngIf="loginForm.get('Username')?.invalid">
           Username is required
         </mat-error>
       </mat-form-field>
 
-      <mat-form-field appearance="fill">
+      <mat-form-field>
         <mat-label>Password</mat-label>
-        <input
-          matInput
-          formControlName="Password"
-          type="password"
-          placeholder="Enter your password"
-          required
-        />
-        <mat-error *ngIf="loginForm.controls['Password'].hasError('required')">
+        <input matInput type="password" formControlName="Password" required />
+        <mat-error *ngIf="loginForm.get('Password')?.invalid">
           Password is required
         </mat-error>
       </mat-form-field>
+
+      <div class="button-group">
+        <button mat-raised-button color="primary" type="submit">Login</button>
+        <button mat-button type="button" (click)="dialogRef.close()">
+          Cancel
+        </button>
+      </div>
     </form>
   </mat-card-content>
-
-  <mat-card-actions>
-    <button
-      mat-raised-button
-      color="primary"
-      [disabled]="loginForm.invalid"
-      (click)="loginUser()"
-    >
-      Login
-    </button>
-  </mat-card-actions>
 </mat-card>

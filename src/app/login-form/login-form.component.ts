@@ -9,6 +9,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms'; // Import ReactiveFormsModule
+import { CommonModule } from '@angular/common'; // Import CommonModule
 
 @Component({
   selector: 'app-login-form',
@@ -21,7 +22,8 @@ import { ReactiveFormsModule } from '@angular/forms'; // Import ReactiveFormsMod
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
-    ReactiveFormsModule, // Add ReactiveFormsModule here
+    ReactiveFormsModule, 
+    CommonModule, //  CommonModule to use directives like NgIf
   ],
 })
 export class LoginFormComponent implements OnInit {
@@ -48,12 +50,23 @@ export class LoginFormComponent implements OnInit {
     if (this.loginForm.valid) {
       this.fetchApiData.userLogin(this.loginForm.value).subscribe(
         (result) => {
-          // Close dialog and show success message
+          // Save user info and token to localStorage
+          localStorage.setItem('user', JSON.stringify(result.user));
+          localStorage.setItem('token', result.token);
+
+          // Close the dialog and show success message
           this.dialogRef.close();
-          this.snackBar.open(result, 'OK', {
-            duration: 2000,
-            panelClass: ['success-snackbar'], // Success snackbar styling
-          });
+          this.snackBar.open(
+            `Login Successful, Hello ${result.user.Username}!`,
+            'OK',
+            {
+              duration: 2000,
+              panelClass: ['success-snackbar'], // Optional success styling
+            }
+          );
+
+          // Display alert for additional confirmation
+          alert('Login successful! Welcome to your dashboard.');
         },
         (error) => {
           // Handle login failure and show error message
@@ -63,11 +76,17 @@ export class LoginFormComponent implements OnInit {
             'Retry',
             {
               duration: 3000,
-              panelClass: ['error-snackbar'], // Error snackbar styling
+              panelClass: ['error-snackbar'], // Optional error styling
             }
           );
         }
       );
+    } else {
+      // Handle case when form is invalid
+      this.snackBar.open('Please fill out all required fields.', 'OK', {
+        duration: 2000,
+        panelClass: ['error-snackbar'], // Optional error styling
+      });
     }
   }
 }

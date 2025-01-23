@@ -27,12 +27,6 @@ mat-card {
       width: 100%;
     }
 
-    input {
-      font-size: 1rem;
-      padding: 12px;
-      border-radius: 4px;
-    }
-
     mat-error {
       color: #f44336;
       font-size: 0.9em;
@@ -58,11 +52,11 @@ mat-card {
       }
 
       &:not(:disabled) {
-        background-color: #3f51b5;
+        background-color: #23212c;
         color: white;
 
         &:hover {
-          background-color: #23212c;
+          background-color: #303f9f;
         }
       }
     }
