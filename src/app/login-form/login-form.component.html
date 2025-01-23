@@ -1,0 +1,48 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Login</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <!-- Reactive Form -->
+    <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
+      <mat-form-field appearance="fill">
+        <mat-label>Username</mat-label>
+        <input
+          matInput
+          formControlName="Username"
+          placeholder="Enter your username"
+          type="text"
+          required
+        />
+        <mat-error *ngIf="loginForm.controls['Username'].hasError('required')">
+          Username is required
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          formControlName="Password"
+          type="password"
+          placeholder="Enter your password"
+          required
+        />
+        <mat-error *ngIf="loginForm.controls['Password'].hasError('required')">
+          Password is required
+        </mat-error>
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="loginForm.invalid"
+      (click)="loginUser()"
+    >
+      Login
+    </button>
+  </mat-card-actions>
+</mat-card>

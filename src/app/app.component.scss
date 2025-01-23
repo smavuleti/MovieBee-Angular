@@ -1,0 +1,48 @@
+.main-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f6f8;
+  padding: 20px;
+
+  h1 {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #23212c;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+
+  .buttons-container {
+    display: flex;
+    gap: 20px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    button {
+      font-size: 1.1em;
+      padding: 12px 20px;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+      width: 150px;
+
+      &:not(:disabled) {
+        background-color: #23212c;
+        color: white;
+        font-weight: 600;
+
+        &:hover {
+          background-color: #23212c;
+        }
+      }
+
+      &:disabled {
+        background-color: #b0bec5;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
