@@ -4,7 +4,7 @@ import { Observable, throwError, catchError } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 //Declaring the api url that will provide data for the client app
-const apiUrl = 'https://movie-api-xkkk.onrender.com/';
+const apiUrl = 'https://smavuleti-moviebee-479d2e8d7a6f.herokuapp.com';
 @Injectable({
   providedIn: 'root'
 })
@@ -90,7 +90,7 @@ export class FetchApiDataService {
 
   public getAllMovies(): Observable<any> {
     const token = localStorage.getItem('token');
-    return this.http.get(apiUrl + 'movies', {headers: new HttpHeaders(
+    return this.http.get(apiUrl + '/allMovies', {headers: new HttpHeaders(
       {
         Authorization: 'Bearer ' + token,
       })}).pipe(
