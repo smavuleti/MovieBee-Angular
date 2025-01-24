@@ -3,9 +3,7 @@ import { FetchApiDataService } from '../fetch-api-data.service';
 import { MatCardModule } from '@angular/material/card';  // Import MatCardModule
 import { MatDialogModule } from '@angular/material/dialog';  // Import MatDialogModule
 import { CommonModule } from '@angular/common';  // Import CommonModule for ngFor
-
-
-
+import { MatIconModule } from '@angular/material/icon'; // Import MatIconModule
 
 
 @Component({
@@ -16,7 +14,8 @@ import { CommonModule } from '@angular/common';  // Import CommonModule for ngFo
   imports: [
     MatCardModule,
     MatDialogModule,
-    CommonModule
+    CommonModule,
+    MatIconModule
   ],
     
 })

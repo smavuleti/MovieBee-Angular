@@ -10,6 +10,8 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms'; // Import ReactiveFormsModule
 import { CommonModule } from '@angular/common'; // Import CommonModule
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-login-form',
@@ -33,7 +35,8 @@ export class LoginFormComponent implements OnInit {
     private fb: FormBuilder, // Inject FormBuilder to build form
     public fetchApiData: FetchApiDataService,
     public dialogRef: MatDialogRef<LoginFormComponent>, // Inject dialog reference to close dialog
-    public snackBar: MatSnackBar // Inject snackbar to show notifications
+    public snackBar: MatSnackBar, // Inject snackbar to show notifications
+    private router: Router,
   ) {
     // Initialize loginForm with FormBuilder
     this.loginForm = this.fb.group({
@@ -65,6 +68,7 @@ export class LoginFormComponent implements OnInit {
             }
           );
 
+          this.router.navigate(['allMovies']);
           // Display alert for additional confirmation
           alert('Login successful! Welcome to your dashboard.');
         },
