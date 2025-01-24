@@ -13,11 +13,17 @@ import { ReactiveFormsModule } from '@angular/forms'; // Import ReactiveFormsMod
 import { AppComponent } from './app.component'; // Standalone component
 import { UserRegistrationFormComponent } from './user-registration-form/user-registration-form.component'; // Standalone component
 import { LoginFormComponent } from './login-form/login-form.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // Added to support Angular Material animations
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MovieCardComponent } from './movie-card/movie-card.component';
+import { WelcomePageComponent } from './welcome-page/welcome-page.component'; // Added to support Angular Material animations
 
 @NgModule({
   declarations: [
     // No need to declare standalone components in declarations
+  
+    
+  
+    
   ],
   imports: [
     BrowserModule,
@@ -35,6 +41,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
     AppComponent, // Import standalone AppComponent
     UserRegistrationFormComponent, // Import standalone UserRegistrationFormComponent
     LoginFormComponent, // Import standalone LoginFormComponent
+    MovieCardComponent,
+    WelcomePageComponent
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -2,6 +2,7 @@ import { Component, ElementRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { UserRegistrationFormComponent } from './user-registration-form/user-registration-form.component';
 import { LoginFormComponent } from './login-form/login-form.component';
+import { MovieCardComponent } from './movie-card/movie-card.component';
 
 @Component({
   selector: 'app-root',
@@ -46,6 +47,14 @@ export class AppComponent {
       if (mainContent) {
         mainContent.removeAttribute('aria-hidden');
       }
+    });
+  }
+
+   // Open Movie Card Dialog
+   openMovieCardDialog(): void {
+    this.dialog.open(MovieCardComponent, {
+      width: '50%',
+      height: '50%',
     });
   }
 }

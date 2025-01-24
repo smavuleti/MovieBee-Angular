@@ -15,16 +15,31 @@ export class FetchApiDataService {
   }
  // Making the api call for the user registration endpoint
   public userRegistration(userDetails: any): Observable<any> {
-    console.log(userDetails);
-    return this.http.post(apiUrl + 'users', userDetails).pipe(
+    const formattedDetails = {
+      
+      Username: userDetails.Username,
+      UserPassword: userDetails.Password,
+      UserEmail: userDetails.Email,
+      UserBirthday: new Date(userDetails.Birthday).toISOString(),
+    };
+    console.log('Formatted User Details:', formattedDetails);
+    return this.http.post(apiUrl + 'users', formattedDetails).pipe(
     catchError(this.handleError)
+    
     );
   }
 
   public userLogin(userDetails: any): Observable<any> {
-    console.log(userDetails);
-    return this.http.post(apiUrl + 'login', userDetails).pipe(
-    catchError(this.handleError)
+    // Format the user details to match the backend's expected structure
+    const formattedDetails = {
+      Username: userDetails.Username, // Map Email from userDetails
+      UserPassword: userDetails.Password, // Map Password from userDetails
+    };
+  
+    console.log('Formatted User Login Details:', formattedDetails);
+  
+    return this.http.post(apiUrl + 'login', formattedDetails).pipe(
+      catchError(this.handleError)
     );
   }
 
@@ -90,7 +105,7 @@ export class FetchApiDataService {
 
   public getAllMovies(): Observable<any> {
     const token = localStorage.getItem('token');
-    return this.http.get(apiUrl + '/allMovies', {headers: new HttpHeaders(
+    return this.http.get(apiUrl + 'allMovies', {headers: new HttpHeaders(
       {
         Authorization: 'Bearer ' + token,
       })}).pipe(

@@ -1,0 +1,12 @@
+<div>
+    <h2>Movie List</h2>
+    <mat-card *ngFor="let movie of movies; let i = index" class="movie-card">
+      <mat-card-header>
+        <mat-card-title>{{ movie.Title }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <img [src]="movie.ImagePath" alt="{{ movie.Title }}" class="movie-image" />
+      </mat-card-content>
+    </mat-card>
+  </div>
+  
