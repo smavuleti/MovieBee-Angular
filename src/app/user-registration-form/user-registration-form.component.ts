@@ -8,6 +8,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FetchApiDataService } from '../fetch-api-data.service'; // Assuming you have this service to handle API requests
 
+/**
+ * Component for user registration form.
+ * This component provides a form for users to register a new account.
+ */
 @Component({
   selector: 'app-user-registration-form',
   templateUrl: './user-registration-form.component.html',
@@ -22,14 +26,28 @@ import { FetchApiDataService } from '../fetch-api-data.service'; // Assuming you
   ],
 })
 export class UserRegistrationFormComponent implements OnInit {
+    /**
+   * Stores user registration data, including username, password, email, and birthday.
+   */
   movie = { Username: '', Password: '', Email: '', Birthday: '' };
 
+    /**
+   * Constructs the UserRegistrationFormComponent and injects required dependencies.
+   * @param fetchApiData - Service for making API requests.
+   * @param snackBar - Angular Material SnackBar for displaying notifications.
+   * @param dialogRef - Reference to the current dialog instance.
+   */
   constructor(
     private fetchApiData: FetchApiDataService,
     private snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<UserRegistrationFormComponent>
   ) {}
 
+    /**
+   * Handles user registration by submitting form data to the API.
+   * On success, the dialog is closed and a success message is shown.
+   * On failure, an error message is displayed.
+   */
   registerUser(): void {
     this.fetchApiData.userRegistration(this.movie).subscribe(
       (result) => {
@@ -47,5 +65,8 @@ export class UserRegistrationFormComponent implements OnInit {
     );
   }
 
+    /**
+   * Lifecycle hook that is called after the component has been initialized.
+   */
   ngOnInit(): void {}
 }

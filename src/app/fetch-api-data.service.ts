@@ -7,17 +7,28 @@ import {
 import { Observable, throwError, catchError } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-//Declaring the api url that will provide data for the client app
+/**
+ * Base URL for the API used in the client application.
+ */
 const apiUrl = 'https://smavuleti-moviebee-479d2e8d7a6f.herokuapp.com/';
+
+/**
+ * Service for interacting with the MovieBee API.
+ */
 @Injectable({
   providedIn: 'root',
 })
 export class FetchApiDataService {
-  // Inject the HttpClient module to the constructor params
-  // This will provide HttpClient to the entire class, making it available via this.http
+    /**
+   * Injects the HttpClient module for API interactions.
+   * @param http - Angular's HttpClient for making HTTP requests.
+   */
   constructor(private http: HttpClient) {}
-  // Making the api call for the user registration endpoint
-  public userRegistration(userDetails: any): Observable<any> {
+  /**
+   * Registers a new user.
+   * @param userDetails - Object containing the user's registration details.
+   * @returns Observable of the API response.
+   */  public userRegistration(userDetails: any): Observable<any> {
     const formattedDetails = {
       Username: userDetails.Username,
       UserPassword: userDetails.Password,
@@ -29,6 +40,11 @@ export class FetchApiDataService {
       .pipe(catchError(this.handleError));
   }
 
+    /**
+   * Logs in an existing user.
+   * @param userDetails - Object containing the user's login details.
+   * @returns Observable of the API response.
+   */
   public userLogin(userDetails: any): Observable<any> {
     // Format the user details to match the backend's expected structure
     const formattedDetails = {
@@ -40,7 +56,10 @@ export class FetchApiDataService {
       .post(apiUrl + 'login', formattedDetails)
       .pipe(catchError(this.handleError));
   }
-
+  /**
+   * Retrieves the currently logged-in user's data from localStorage.
+   * @returns User data object.
+   */
   public getUser(): any {
     const user: any = JSON.parse(localStorage.getItem('user') || '');
     return {
@@ -48,6 +67,12 @@ export class FetchApiDataService {
     };
   }
 
+   /**
+   * Updates the user's information.
+   * @param username - Username of the user to update.
+   * @param userDetails - Updated user information.
+   * @returns Observable of the API response.
+   */
   public editUser(username: String, userDetails: any): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http
@@ -59,6 +84,11 @@ export class FetchApiDataService {
       .pipe(map(this.extractResponseData), catchError(this.handleError));
   }
 
+    /**
+   * Deregisters a user.
+   * @param username - Username of the user to deregister.
+   * @returns Observable of the API response.
+   */
   public deregisterUser(username: String): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http
@@ -70,6 +100,10 @@ export class FetchApiDataService {
       .pipe(map(this.extractResponseData), catchError(this.handleError));
   }
 
+    /**
+   * Retrieves the favorite movies of the currently logged-in user.
+   * @returns Object containing the user's favorite movies.
+   */
   public getUserFavoriteMovies(): any {
     const user: any = JSON.parse(localStorage.getItem('user') || '');
     return {
@@ -77,6 +111,12 @@ export class FetchApiDataService {
     };
   }
 
+    /**
+   * Adds a movie to the user's favorites.
+   * @param username - Username of the user.
+   * @param movieId - ID of the movie to add.
+   * @returns Observable of the API response.
+   */
   public addFavoriteMovie(username: String, movieId: String): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http
@@ -92,6 +132,12 @@ export class FetchApiDataService {
       .pipe(map(this.extractResponseData), catchError(this.handleError));
   }
 
+    /**
+   * Removes a movie from the user's favorites.
+   * @param username - Username of the user.
+   * @param movieId - ID of the movie to remove.
+   * @returns Observable of the API response.
+   */
   public removeFavoriteMovie(
     username: String,
     movieId: String
@@ -120,6 +166,10 @@ export class FetchApiDataService {
       );
   }
 
+    /**
+   * Fetches all movies from the API.
+   * @returns Observable of the list of all movies.
+   */
   public getAllMovies(): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http
@@ -140,6 +190,11 @@ export class FetchApiDataService {
       );
   }
 
+    /**
+   * Fetches details of a specific movie.
+   * @param movietitle - Title of the movie to fetch.
+   * @returns Observable of the movie details.
+   */
   public getMovie(movietitle: String): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http
@@ -151,6 +206,11 @@ export class FetchApiDataService {
       .pipe(map(this.extractResponseData), catchError(this.handleError));
   }
 
+      /**
+   * Fetches details of a specific movie.
+   * @param movieDirector - Director of the movie to fetch.
+   * @returns Observable of the director details.
+   */
   public getMovieDirector(movieDirector: String): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http
@@ -162,6 +222,11 @@ export class FetchApiDataService {
       .pipe(map(this.extractResponseData), catchError(this.handleError));
   }
 
+     /**
+   * Fetches details of a specific movie.
+   * @param movieGenre - Genre of the movie to fetch.
+   * @returns Observable of the Genre details.
+   */
   public getMovieGenre(movieGenre: String): Observable<any> {
     const token = localStorage.getItem('token');
     return this.http
@@ -172,6 +237,13 @@ export class FetchApiDataService {
       })
       .pipe(map(this.extractResponseData), catchError(this.handleError));
   }
+
+
+  /**
+   * Handles HTTP errors.
+   * @param error - The HTTP error response.
+   * @returns Observable that throws an error.
+   */
 
   private handleError(error: HttpErrorResponse): Observable<never> {
     // Check if the error is a client-side or network error

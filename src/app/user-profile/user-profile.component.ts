@@ -12,6 +12,15 @@ import { MatTabsModule } from '@angular/material/tabs'; // Material Tabs module 
 import { CommonModule } from '@angular/common'; // Angular's CommonModule (required for *ngIf, *ngFor)
 import { FormsModule } from '@angular/forms'; // Angular Forms module (required for ngModel)
 
+/**
+ * Component for displaying and managing the user's profile in the MovieBee application.
+ *
+ * Features:
+ * - Displays user information and favorite movies
+ * - Allows updating user details
+ * - Provides functionality to remove movies from favorites
+ * - Enables account deregistration
+ */
 @Component({
   selector: 'app-user-profile', // Defines the selector used to render this component
   templateUrl: './user-profile.component.html',
@@ -31,7 +40,10 @@ import { FormsModule } from '@angular/forms'; // Angular Forms module (required 
   ],
 })
 export class UserProfileComponent implements OnInit {
-  // Define the userData object that holds user details and favorite movies
+  /**
+   * Object to store user data, including username, email, birthday, password, and favorite movies.
+   * @type {any}
+   */
   userData: any = {
     Username: '',
     UserEmail: '',
@@ -39,10 +51,30 @@ export class UserProfileComponent implements OnInit {
     UserPassword: '',
     UserFavoriteMovies: [], // List of IDs for user's favorite movies
   };
-  favoriteMovies: any[] = []; // Array to store the user's favorite movies
-  showDescription: string = ''; // Variable to hold the current movie description
-  showDirector: string = ''; // Variable to hold the current movie director's name
+  /**
+   * List of favorite movies fetched from the API.
+   * @type {any[]}
+   */
+  favoriteMovies: any[] = [];
+  /**
+   * Holds the description of the currently selected movie.
+   * @type {string}
+   */
+  showDescription: string = '';
+  /**
+   * Holds the director's name of the currently selected movie.
+   * @type {string}
+   */
+  showDirector: string = '';
 
+  /**
+   * Constructor to inject dependencies and initialize the component.
+   *
+   * @param fetchApiData - Service for fetching and interacting with API data
+   * @param router - Router service for navigation
+   * @param snackBar - Service for displaying snack bar notifications
+   * @param dialog - Service for managing dialog modals
+   */
   constructor(
     public fetchApiData: FetchApiDataService,
     public router: Router,
@@ -53,7 +85,10 @@ export class UserProfileComponent implements OnInit {
     this.userData = userData ? JSON.parse(userData) : this.userData;
   }
 
-  // ngOnInit lifecycle hook: Called when the component is initialized
+  /**
+   * Lifecycle hook that is called after the component's data-bound properties are initialized.
+   * Fetches the user's favorite movies on initialization.
+   */
   ngOnInit(): void {
     try {
       // Attempt to fetch the user's favorite movies after component is initialized
@@ -63,10 +98,10 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
-  // Function to get the list of movies the user has marked as favorites
+  /**
+   * Retrieves the user's favorite movies by filtering all movies fetched from the API.
+   */
   getFavMovies(): void {
-    // Reload user data from localStorage to ensure it's updated
-
     const updatedUser: any = JSON.parse(localStorage.getItem('user') || '{}');
     this.userData = updatedUser; // Reload userData from localStorage
 
@@ -77,6 +112,11 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
+  /**
+   * Removes a movie from the user's list of favorite movies.
+   *
+   * @param movieId - The ID of the movie to remove
+   */
   removeFromFavorites(movieId: string): void {
     const user: any = JSON.parse(localStorage.getItem('user') as any);
     this.fetchApiData.removeFavoriteMovie(user.Username, movieId).subscribe(
@@ -102,13 +142,20 @@ export class UserProfileComponent implements OnInit {
     );
   }
 
+  /**
+   * Deletes the user's account and logs them out.
+   */
   confirmDeleteAccount(): void {
     const user: any = JSON.parse(localStorage.getItem('user') as any);
-    this.fetchApiData.deregisterUser(user.Username).subscribe((resp: any) => {
-    });
+    this.fetchApiData
+      .deregisterUser(user.Username)
+      .subscribe((resp: any) => {});
     this.logout();
   }
 
+  /**
+   * Updates the user's profile with the current user data.
+   */
   updateProfile(): void {
     this.fetchApiData.editUser(this.userData.Username, this.userData).subscribe(
       (resp: any) => {
@@ -134,12 +181,15 @@ export class UserProfileComponent implements OnInit {
       }
     );
   }
-
+  /**
+   * Navigates to the "All Movies" page.
+   */
   allMovies(): void {
     this.router.navigate(['allMovies']);
   }
-  // Function to log out the user by removing data from localStorage
-
+  /**
+   * Logs the user out by clearing localStorage and navigating to the welcome page.
+   */
   logout(): void {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
@@ -147,6 +197,12 @@ export class UserProfileComponent implements OnInit {
     this.snackBar.open('Logged out successfully', 'OK', { duration: 2000 });
   }
 
+  /**
+   * Displays the description of a selected movie in a dialog modal.
+   *
+   * @param templateRef - Template reference for the dialog content
+   * @param desc - Description of the selected movie
+   */
   showDescriptionDialog(templateRef: TemplateRef<any>, desc: string): void {
     this.showDescription = desc;
     this.dialog.open(templateRef, {
@@ -154,6 +210,12 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
+  /**
+   * Displays the director's name of a selected movie in a dialog modal.
+   *
+   * @param templateRef - Template reference for the dialog content
+   * @param director - Name of the director
+   */
   showDirectorDialog(templateRef: TemplateRef<any>, director: string): void {
     this.showDirector = director;
     this.dialog.open(templateRef, {

@@ -12,7 +12,12 @@ import { ReactiveFormsModule } from '@angular/forms'; // Import ReactiveFormsMod
 import { CommonModule } from '@angular/common'; // Import CommonModule
 import { Router } from '@angular/router';
 
-
+/**
+ * Component for the user login form in the MovieBee application.
+ * 
+ * This component provides a form for users to log in to their accounts,
+ * handles form validation, and communicates with the API for authentication.
+ */
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
@@ -29,7 +34,11 @@ import { Router } from '@angular/router';
   ],
 })
 export class LoginFormComponent implements OnInit {
-  loginForm: FormGroup; // Form group to handle login form fields
+    /**
+   * Form group to manage the login form fields and validation.
+   * @type {FormGroup}
+   */
+  loginForm: FormGroup; 
 
   constructor(
     private fb: FormBuilder, // Inject FormBuilder to build form
@@ -48,6 +57,17 @@ export class LoginFormComponent implements OnInit {
   ngOnInit(): void {
     // Any logic needed during component initialization
   }
+
+
+  /**
+   * Handles the user login process.
+   * 
+   * - Validates the form fields.
+   * - Sends the login request to the API.
+   * - Stores user data and token in localStorage upon success.
+   * - Navigates the user to the "allMovies" view.
+   * - Shows appropriate notifications for success or failure.
+   */
 
   loginUser(): void {
     if (this.loginForm.valid) {
