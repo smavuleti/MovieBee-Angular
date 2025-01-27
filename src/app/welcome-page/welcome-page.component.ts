@@ -10,17 +10,21 @@ import { MatDialog } from '@angular/material/dialog';
   standalone: true,
 })
 export class WelcomePageComponent implements OnInit {
-  constructor(public dialog: MatDialog) { }
-  ngOnInit(): void {
-  }
+  constructor(public dialog: MatDialog) {}
+  ngOnInit(): void {}
+
+  // Function to open the User Registration dialog when the user clicks a button
   openUserRegistrationDialog(): void {
+    // Open the UserRegistrationFormComponent in a dialog with a specific width
     this.dialog.open(UserRegistrationFormComponent, {
-      width: '280px'
+      width: '600px',
     });
   }
-openUserLoginDialog(): void {
+
+  // Function to open the User Login dialog when the user clicks a button
+  openUserLoginDialog(): void {
     this.dialog.open(LoginFormComponent, {
-      width: '280px'
+      width: '600px',
     });
   }
 }

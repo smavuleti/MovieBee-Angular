@@ -22,7 +22,7 @@ import { FetchApiDataService } from '../fetch-api-data.service'; // Assuming you
   ],
 })
 export class UserRegistrationFormComponent implements OnInit {
-  userData = { Username: '', Password: '', Email: '', Birthday: '' };
+  movie = { Username: '', Password: '', Email: '', Birthday: '' };
 
   constructor(
     private fetchApiData: FetchApiDataService,
@@ -31,7 +31,7 @@ export class UserRegistrationFormComponent implements OnInit {
   ) {}
 
   registerUser(): void {
-    this.fetchApiData.userRegistration(this.userData).subscribe(
+    this.fetchApiData.userRegistration(this.movie).subscribe(
       (result) => {
         this.dialogRef.close(); // Close the modal on success
         this.snackBar.open('Registration successful!', 'OK', {

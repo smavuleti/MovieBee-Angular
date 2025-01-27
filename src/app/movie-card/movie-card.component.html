@@ -1,30 +1,121 @@
-<div style="display: flex;">
-  <mat-card *ngFor="let movie of movies;" style="flex: 1 1 auto;">
-      <mat-card-header>
-      <mat-card-title>{{movie.movieTitle}}</mat-card-title>
-          <mat-card-subtitle>Directed by: {{movie.MovieDirector.DirectorName}}</mat-card-subtitle>
+<div style="position: relative; padding: 16px">
+  <h1 style="text-align: left; margin-bottom: 16px; color: #333">MovieBee</h1>
+  <h2 style="text-align: center; margin-bottom: 16px">All Movies</h2>
+
+  <!-- Profile Button -->
+  <button
+    mat-raised-button
+    (click)="viewProfile()"
+    color="primary"
+    style="position: absolute; top: 16px; right: 96px; z-index: 10"
+  >
+    My Profile
+  </button>
+
+  <!-- Logout Button -->
+  <button
+    mat-button
+    (click)="logout()"
+    color="warn"
+    style="position: absolute; top: 16px; right: 16px; z-index: 10"
+  >
+    Logout
+  </button>
+
+  <!-- Movie Cards Container -->
+  <div
+    style="
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 64px;
+    "
+  >
+    <mat-card
+      *ngFor="let movie of movies"
+      style="
+        flex: 1 1 calc(300px - 32px);
+        max-width: 300px;
+        margin: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      "
+    >
+      <mat-card-header
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        "
+      >
+        <mat-card-title>{{ movie.MovieTitle }}</mat-card-title>
+        <div style="cursor: pointer">
+          <mat-icon
+            *ngIf="!isFavorite(movie._id)"
+            (click)="addToFavorites(movie._id)"
+            color="primary"
+          >
+            favorite_border
+          </mat-icon>
+          <mat-icon
+            *ngIf="isFavorite(movie._id)"
+            (click)="removeFromFavorites(movie._id)"
+            color="accent"
+          >
+            favorite
+          </mat-icon>
+        </div>
       </mat-card-header>
-      <img src={{movie.ImagePath}} alt= {{movie.Title}} />
-      <mat-card-actions>
-          <button
-              mat-button
-              color="primary"
-          >
-              Genre
-          </button>
-          <button
-              mat-button
-              color="primary"
-          >
-              Director
-          </button>
-          <button
-              mat-button
-              color="primary"
-          >
-              Synopsis
-          </button>
-          <mat-icon>favorite_border</mat-icon>
+      <img
+        mat-card-image
+        [src]="movie.ImagePath"
+        [alt]="movie.MovieTitle"
+        style="height: auto; max-height: 300px; object-fit: cover"
+      />
+      <mat-card-content>
+        <p>{{ movie.MovieGenre.GenreName }}</p>
+      </mat-card-content>
+      <mat-card-actions style="justify-content: flex-start; padding: 8px 16px">
+        <button
+          mat-button
+          color="primary"
+          (click)="
+            showDescriptionDialog(descriptionDialog, movie.MovieDescription)
+          "
+        >
+          Description
+        </button>
+        <button
+          mat-button
+          color="primary"
+          (click)="
+            showDirectorDialog(directorDialog, movie.MovieDirector.DirectorName)
+          "
+        >
+          Director
+        </button>
       </mat-card-actions>
-  </mat-card>
+    </mat-card>
+  </div>
 </div>
+
+<!-- Dialog Templates -->
+<ng-template #descriptionDialog>
+  <h2 mat-dialog-title>Movie Description</h2>
+  <mat-dialog-content>
+    <p>{{ currentDescription }}</p>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Close</button>
+  </mat-dialog-actions>
+</ng-template>
+
+<ng-template #directorDialog>
+  <h2 mat-dialog-title>Director of the Movie</h2>
+  <mat-dialog-content>
+    <p>{{ currentDirector }}</p>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Close</button>
+  </mat-dialog-actions>
+</ng-template>

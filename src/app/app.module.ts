@@ -9,6 +9,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatIconModule } from '@angular/material/icon'; // Import MatIconModule
+import { MatTabsModule } from '@angular/material/tabs';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms'; // Import ReactiveFormsModule
 import { AppComponent } from './app.component'; // Standalone component
@@ -16,11 +18,31 @@ import { UserRegistrationFormComponent } from './user-registration-form/user-reg
 import { LoginFormComponent } from './login-form/login-form.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MovieCardComponent } from './movie-card/movie-card.component';
-import { WelcomePageComponent } from './welcome-page/welcome-page.component'; // Added to support Angular Material animations
+import { WelcomePageComponent } from './welcome-page/welcome-page.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 const appRoutes: Routes = [
-  { path: 'welcome', loadComponent: () => import('./welcome-page/welcome-page.component').then(m => m.WelcomePageComponent) },
-  { path: 'allMovies', loadComponent: () => import('./movie-card/movie-card.component').then(m => m.MovieCardComponent) },
+  {
+    path: 'welcome',
+    loadComponent: () =>
+      import('./welcome-page/welcome-page.component').then(
+        (m) => m.WelcomePageComponent
+      ),
+  },
+  {
+    path: 'allMovies',
+    loadComponent: () =>
+      import('./movie-card/movie-card.component').then(
+        (m) => m.MovieCardComponent
+      ),
+  },
+  {
+    path: 'profile',
+    loadComponent: () =>
+      import('./user-profile/user-profile.component').then(
+        (m) => m.UserProfileComponent
+      ),
+  },
   { path: '', redirectTo: 'welcome', pathMatch: 'prefix' },
 ];
 
@@ -36,6 +58,7 @@ const appRoutes: Routes = [
     MatDialogModule,
     MatSnackBarModule,
     FormsModule,
+    MatTabsModule,
     ReactiveFormsModule, // Add ReactiveFormsModule here
     BrowserAnimationsModule, // Ensure animations are supported
     AppComponent, // Import standalone AppComponent
@@ -43,7 +66,9 @@ const appRoutes: Routes = [
     LoginFormComponent, // Import standalone LoginFormComponent
     MovieCardComponent,
     WelcomePageComponent,
-    RouterModule.forRoot(appRoutes)
+    UserProfileComponent,
+    RouterModule.forRoot(appRoutes),
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,0 +1,159 @@
+<div style="position: relative; padding: 16px">
+  <h1 style="text-align: left; margin-bottom: 16px; color: #333">MovieBee</h1>
+  <h2 style="text-align: center; margin-bottom: 16px">Edit Profile</h2>
+  <!-- Profile Buttons -->
+  <button
+    mat-raised-button
+    (click)="allMovies()"
+    color="primary"
+    style="position: absolute; top: 16px; right: 96px; z-index: 10"
+  >
+    All Movies
+  </button>
+  <button
+    mat-button
+    (click)="logout()"
+    color="warn"
+    style="position: absolute; top: 16px; right: 16px; z-index: 10"
+  >
+    Logout
+  </button>
+
+  <!-- User Profile Section -->
+  <div
+    style="
+      margin-top: 64px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    "
+  >
+    <mat-form-field appearance="fill" style="width: 100%">
+      <mat-label>Username</mat-label>
+      <input
+        matInput
+        [(ngModel)]="userData.Username"
+        placeholder="Enter your username"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="fill" style="width: 100%">
+      <mat-label>Email</mat-label>
+      <input
+        matInput
+        type="email"
+        [(ngModel)]="userData.UserEmail"
+        placeholder="Enter your email"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="fill" style="width: 100%">
+      <mat-label>Birthday</mat-label>
+      <input matInput type="date" [(ngModel)]="userData.UserBirthday" />
+    </mat-form-field>
+    <mat-form-field appearance="fill" style="width: 100%">
+      <mat-label>Password</mat-label>
+      <input
+        matInput
+        type="password"
+        [(ngModel)]="userData.UserPassword"
+        placeholder="Enter your password"
+      />
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="updateProfile()">
+      Save Changes
+    </button>
+    <button mat-button color="warn" (click)="confirmDeleteAccount()">
+      Delete Account
+    </button>
+  </div>
+
+  <!-- Movie Cards Container -->
+  <h2 style="text-align: center; margin-bottom: 16px">Your Favorite Movies</h2>
+  <div
+    style="
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 64px;
+    "
+  >
+    <ng-template #noFavorites>
+      <p class="no-favorites-message">No favorite movies!</p>
+    </ng-template>
+    <ng-container *ngIf="favoriteMovies.length > 0; else noFavorites">
+      <mat-card *ngFor="let movie of favoriteMovies; let i = index">
+        <mat-card-header
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+          "
+        >
+          <mat-card-title>{{ movie.MovieTitle }}</mat-card-title>
+          <button
+            mat-icon-button
+            color="accent"
+            (click)="removeFromFavorites(movie._id)"
+          >
+            <mat-icon>favorite</mat-icon>
+          </button>
+        </mat-card-header>
+        <img
+          mat-card-image
+          [src]="movie.ImagePath"
+          [alt]="movie.MovieTitle"
+          style="height: auto; max-height: 300px; object-fit: cover"
+        />
+        <mat-card-content>
+          <p>{{ movie.MovieGenre.GenreName }}</p>
+        </mat-card-content>
+        <mat-card-actions
+          style="justify-content: flex-start; padding: 8px 16px"
+        >
+          <button
+            mat-button
+            color="primary"
+            (click)="
+              showDescriptionDialog(descriptionDialog, movie.MovieDescription)
+            "
+          >
+            Description
+          </button>
+          <button
+            mat-button
+            color="primary"
+            (click)="
+              showDirectorDialog(
+                directorDialog,
+                movie.MovieDirector.DirectorName
+              )
+            "
+          >
+            Director
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </ng-container>
+  </div>
+
+  <!-- Dialog Templates -->
+  <ng-template #descriptionDialog>
+    <h2 mat-dialog-title>Movie Description</h2>
+    <mat-dialog-content>
+      <p>{{ showDescription }}</p>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Close</button>
+    </mat-dialog-actions>
+  </ng-template>
+
+  <ng-template #directorDialog>
+    <h2 mat-dialog-title>Director of the Movie</h2>
+    <mat-dialog-content>
+      <p>{{ showDirector }}</p>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Close</button>
+    </mat-dialog-actions>
+  </ng-template>
+</div>
