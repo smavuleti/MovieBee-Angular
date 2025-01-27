@@ -24,7 +24,6 @@ export class FetchApiDataService {
       UserEmail: userDetails.Email,
       UserBirthday: new Date(userDetails.Birthday).toISOString(),
     };
-    console.log('Formatted User Details:', formattedDetails);
     return this.http
       .post(apiUrl + 'users', formattedDetails)
       .pipe(catchError(this.handleError));
@@ -36,8 +35,6 @@ export class FetchApiDataService {
       Username: userDetails.Username, // Map Email from userDetails
       UserPassword: userDetails.Password, // Map Password from userDetails
     };
-
-    console.log('Formatted User Login Details:', formattedDetails);
 
     return this.http
       .post(apiUrl + 'login', formattedDetails)
@@ -114,7 +111,6 @@ export class FetchApiDataService {
       })
       .pipe(
         map((data) => {
-          console.log('Movie removed from favorites successfully:', data);
           return data; // Return updated user data
         }),
         catchError((error) => {

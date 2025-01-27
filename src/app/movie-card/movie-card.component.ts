@@ -44,7 +44,6 @@ export class MovieCardComponent implements OnInit {
   getMovies(): void {
     this.fetchApiData.getAllMovies().subscribe((data: any) => {
       this.movies = data;
-      console.log(this.movies);
       return this.movies;
     });
   }
@@ -119,7 +118,6 @@ export class MovieCardComponent implements OnInit {
     const userFavorites: any = JSON.parse(
       localStorage.getItem('user') as any
     ).UserFavoriteMovies;
-    console.log(userFavorites);
     return userFavorites.includes(movieId);
   }
 
